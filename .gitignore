@@ -4,4 +4,3 @@
 /.vscode/
 *.log
 .DS_Store
-app/config/Database.php
