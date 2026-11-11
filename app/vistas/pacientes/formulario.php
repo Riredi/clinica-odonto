@@ -2,6 +2,7 @@
 <html>
 
     <head>
+        <!--nota: esto tambien es una plantilla para los inputs-->
         <style>
             body { font-family: Arial, sans-serif; margin: 20px; max-width: 500px; }
             label { display: block; margin-top: 10px; font-weight: bold; }
