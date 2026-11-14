@@ -34,6 +34,40 @@
             $stmt = $this->conn->prepare($sql);
             return $stmt->execute($datos);
         }
+
+        
+        public function obtener($id)
+        
+        {
+            $sql = "SELECT * FROM citas WHERE id = :id";
+
+            
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':id' => $id]);
+
+            return $stmt->fetch();
+        }
+
+
+        public function actualizar($datos)
+        {
+            $sql =  "UPDATE citas SET dni=:dni, nombres=:nombres,
+                    apellidos=:apellidos, telefono=:telefono, email=:email WHERE id=:id";
+
+
+            $stmt = $this->conn->prepare($sql);
+            return $stmt->execute($datos);
+
+        }
+
+        public function eliminar($id)
+        {
+            $sql = "DELETE FROM citas WHERE id = :id";
+
+            $stmt = $this->conn->prepare($sql);
+
+            return $stmt->execute([':id' => $id]);
+        }
     }
 
     

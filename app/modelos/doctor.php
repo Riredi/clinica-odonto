@@ -34,6 +34,39 @@
             $stmt = $this->conn->prepare($sql);
             return $stmt->execute($datos);
         }
+
+        public function obtener($id)
+        
+        {
+            $sql = "SELECT * FROM doctores WHERE id = :id";
+
+            
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([':id' => $id]);
+
+            return $stmt->fetch();
+        }
+
+
+        public function actualizar($datos)
+        {
+            $sql =  "UPDATE doctores SET dni=:dni, nombres=:nombres,
+                    apellidos=:apellidos, telefono=:telefono, email=:email WHERE id=:id";
+
+
+            $stmt = $this->conn->prepare($sql);
+            return $stmt->execute($datos);
+
+        }
+
+        public function eliminar($id)
+        {
+            $sql = "DELETE FROM doctores WHERE id = :id";
+
+            $stmt = $this->conn->prepare($sql);
+
+            return $stmt->execute([':id' => $id]);
+        }
     }
 
     
