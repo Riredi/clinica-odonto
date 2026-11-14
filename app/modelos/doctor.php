@@ -57,7 +57,7 @@
             $stmt = $this->conn->prepare($sql);
             return $stmt->execute($datos);
 
-        }
+        } 
 
         public function eliminar($id)
         {

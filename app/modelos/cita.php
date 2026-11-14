@@ -51,7 +51,7 @@
             $stmt->execute([':id' => $id]);
 
             return $stmt->fetch();
-        }
+        } 
 
 
         public function actualizar($datos)
