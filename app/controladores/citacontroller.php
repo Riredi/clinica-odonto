@@ -37,11 +37,11 @@
                     $datos = 
                     [
                         ':paciente_id' => $_POST['paciente_id'],
-                        ':doctor_id' => $_POST['doctor_id'],
-                        ':fecha_cita' => $_POST['fecha_cita'],
-                        ':hora_cita' => $_POST['hora_cita'],
-                        ':motivo' => $_POST['motivo'],
-                        ':estado' => $_POST['estado']
+                        ':doctor_id'   => $_POST['doctor_id'],
+                        ':fecha_cita'  => $_POST['fecha_cita'],
+                        ':hora_cita'   => $_POST['hora_cita'],
+                        ':motivo'      => $_POST['motivo'],
+                        ':estado'      => $_POST['estado']
                     ];
                     
                     $this->cita->registrar($datos);
