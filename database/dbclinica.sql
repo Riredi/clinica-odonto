@@ -82,6 +82,26 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
+-- -----------------------------------------------------
+-- Table `clinica_db`.`usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `clinica_db`.`usuarios` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(50) NOT NULL,
+  `password` VARCHAR(225) NOT NULL,
+  `nombre_completo` VARCHAR(100) NOT NULL,
+  `fecha_registro` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `username` (`username` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 2
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+insert into `clinica_db`.`usuarios` (`username`, `password`, `nombre_completo`) values 
+('admin', '12345678','Administrador')
