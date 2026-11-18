@@ -13,7 +13,7 @@
             $this->conn = $database->getConnection();
         }
 
-        public function listar()
+        public function listar() 
         {
 
             $sql = "SELECT id, dni, nombres, apellidos, telefono, email FROM pacientes ORDER BY id DESC";

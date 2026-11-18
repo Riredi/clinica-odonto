@@ -16,7 +16,7 @@
         public function listar()
         {
 
-            $sql = "SELECT id, dni, nombres, apellidos, telefono, email FROM doctores ORDER BY id DESC";
+            $sql = "SELECT id, cmp, nombres, apellidos, especialidad, telefono, email FROM doctores ORDER BY id DESC";
             
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
@@ -27,8 +27,8 @@
 
         public function registrar($datos)
         {
-            $sql = "INSERT INTO doctores (dni, nombres, apellidos, telefono, email, fecha_nacimiento) 
-                    VALUES (:dni, :nombres, :apellidos, :telefono, :email, :fecha_nacimiento)";
+            $sql = "INSERT INTO doctores (cmp, nombres, apellidos, especialidad, telefono, email) 
+                VALUES (:cmp, :nombres, :apellidos, :especialidad, :telefono, :email)";
                 
 
             $stmt = $this->conn->prepare($sql);
@@ -50,14 +50,14 @@
 
         public function actualizar($datos)
         {
-            $sql =  "UPDATE doctores SET dni=:dni, nombres=:nombres,
-                    apellidos=:apellidos, telefono=:telefono, email=:email WHERE id=:id";
+            $sql =  "UPDATE doctores SET cmp=:cmp, nombres=:nombres, apellidos=:apellidos, 
+                    especialidad=:especialidad, telefono=:telefono, email=:email WHERE id=:id";
 
 
             $stmt = $this->conn->prepare($sql);
             return $stmt->execute($datos);
 
-        }
+        } 
 
         public function eliminar($id)
         {
