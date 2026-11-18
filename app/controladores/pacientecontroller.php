@@ -1,110 +1,75 @@
 <?php
-
+    require_once __DIR__ . '/../modelos/Cita.php';
     require_once __DIR__ . '/../modelos/Paciente.php';
+    require_once __DIR__ . '/../modelos/Doctor.php';
 
-    class PacienteController {
+    
+    class CitaController {
+    
+        private $cita;
         private $paciente;
+        private $doctor;
 
-        public function __construct()
-        {
+        public function __construct(){
+
+            $this->cita = new Cita();
             $this->paciente = new Paciente();
-        }
+            $this->doctor = new Doctor();
+            
+            }
 
-        public function listar()
-        {
-            $stmt = $this->paciente->listar();
+
+        public function listar() {
+            
+            $stmt = $this->cita->listar();
+
             $lista = $stmt->fetchAll();
-
-            require_once __DIR__ . '/../vistas/pacientes/tabla.php';
-        }
-
-        public function crear()
-        {
+            
+            require_once __DIR__ . '/../vistas/citas/tabla.php';
+            }
 
 
+
+        public function crear() {
+            
             if ($_SERVER['REQUEST_METHOD'] === 'POST')
             {
-                $datos =
-                [
-                    ':dni' => $_POST['dni'],
-                    ':nombres' => $_POST['nombres'],
-                    ':apellidos' => $_POST['apellidos'],
-                    ':telefono' => $_POST['telefono'],
-                    ':email' => $_POST['email'],
-                    ':fecha_nacimiento' => $_POST['fecha_nacimiento']
-                ];
-
-                $this->paciente->registrar($datos);
-
-                header('Location: PacienteController.php?accion=listar');
+                    $datos = 
+                    [
+                        ':paciente_id' => $_POST['paciente_id'],
+                        ':doctor_id'   => $_POST['doctor_id'],
+                        ':fecha_cita'  => $_POST['fecha_cita'],
+                        ':hora_cita'   => $_POST['hora_cita'],
+                        ':motivo'      => $_POST['motivo'],
+                        ':estado'      => $_POST['estado']
+                    ];
+                    
+                    $this->cita->registrar($datos);
+                    
+                    header('Location: CitaController.php?accion=listar');
+                    
+                    exit;
+            }
                 
-                exit;
-
-            }
-
-
-            require_once __DIR__ . '/../vistas/pacientes/formulario.php';
-        }
-
-        public function editar()
-        {
-            $id = $_GET['id'] ?? 0;
-            
-            if ($_SERVER['REQUEST_METHOD'] === 'POST')
-            {
-
-                $datos =
-                [
-                    ':id' => $_POST['id'],
-                    ':dni' => $_POST['dni'],
-                    ':nombres' => $_POST['nombres'],
-                    ':apellidos' => $_POST['apellidos'],
-                    ':telefono' => $_POST['telefono'],
-                    ':email' => $_POST['email']
-                ];
-
-                $this->paciente->actualizar($datos);
-
-                header('Location: PacienteController.php?accion=listar');
-
-                exit;
-            }
-            
-
-            $paciente = $this->paciente->obtener($id);
-            require_once __DIR__ . '/../vistas/pacientes/formulario.php';
-        }
-
-        public function eliminar()
-        {
-            $id = $_GET['id'] ?? 0;
-
-
-            $this->paciente->eliminar($id);
-            header('Location: PacienteController.php?accion=listar');
-            exit;
-        }
+                $pacientes = $this->paciente->listar()->fetchAll();
+                $doctores = $this->doctor->listar()->fetchAll();
+                
+                require_once __DIR__ . '/../vistas/citas/formulario.php';
+                
+                }
     }
 
-
-
-    $controller = new PacienteController();
+    $controller = new CitaController();
     $accion = $_GET['accion'] ?? 'listar';
 
-
-
-
-    if ($accion === 'listar'){
+    if ($accion === 'listar')
+    {
         $controller->listar();
+    
+    }
 
-    } elseif ($accion === 'crear'){
+    elseif ($accion === 'crear') 
+    {
         $controller->crear();
-
-    } elseif ($accion === 'editar'){
-        $controller->editar();
-
-    } elseif ($accion === 'eliminar') {
-        $controller->eliminar();
-
     }
 ?>

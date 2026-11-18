@@ -15,7 +15,7 @@
             $stmt = $this->doctor->listar();
             $lista = $stmt->fetchAll();
 
-            require_once __DIR__ . '/../vistas/doctor/tabla.php';
+            require_once __DIR__ . '/../vistas/doctores/tabla.php';
         }
 
         public function crear()
@@ -26,12 +26,12 @@
             {
                 $datos =
                 [
-                    ':dni' => $_POST['dni'],
-                    ':nombres' => $_POST['nombres'],
-                    ':apellidos' => $_POST['apellidos'],
-                    ':telefono' => $_POST['telefono'],
-                    ':email' => $_POST['email'],
-                    ':fecha_nacimiento' => $_POST['fecha_nacimiento']
+                    ':cmp'          => $_POST['cmp'],
+                    ':nombres'      => $_POST['nombres'],
+                    ':apellidos'    => $_POST['apellidos'],
+                    ':especialidad' => $_POST['especialidad'],
+                    ':telefono'     => $_POST['telefono'],
+                    ':email'        => $_POST['email']
                 ];
 
                 $this->doctor->registrar($datos);
@@ -43,7 +43,7 @@
             }
 
 
-            require_once __DIR__ . '/../vistas/doctor/formulario.php';
+            require_once __DIR__ . '/../vistas/doctores/formulario.php';
         }
 
         public function editar()
@@ -72,7 +72,7 @@
             
 
             $doctor = $this->doctor->obtener($id);
-            require_once __DIR__ . '/../vistas/doctor/formulario.php';
+            require_once __DIR__ . '/../vistas/doctores/formulario.php';
         }
 
         public function eliminar()
