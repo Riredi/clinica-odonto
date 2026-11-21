@@ -1,21 +1,44 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Lista de citas</title>
+
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        table { border-collapse: collapse; width: 100%; max-width: 800px; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        a { text-decoration: none; color: blue; }
+        body {
+            font-family: Arial;
+            margin: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        a {
+            text-decoration: none;
+            color: blue;
+        }
     </style>
 </head>
 <body>
+
     <h1>Lista de citas</h1>
+
     <p>
-        <a href="/clinica-odonto/app/controladores/citacontroller.php?accion=crear">Nueva cita</a> |
-        <a href="/clinica-odonto/index.php">Volver al inicio</a>
+        <a href="/clinica-odonto/app/controladores/citacontroller.php?accion=crear">Nueva cita</a>
     </p>
 
     <table>
@@ -31,29 +54,24 @@
             <th>Acciones</th>
         </tr>
 
-        <?php if (!empty($lista)): ?>
-            <?php foreach ($lista as $fila): ?>
-                <?php $claseEstado = strtolower($fila['estado']); ?>
-                <tr>
-                    <td><?php echo $fila['id']; ?></td>
-                    <td><?php echo htmlspecialchars($fila['paciente']); ?></td>
-                    <td><?php echo htmlspecialchars($fila['doctor']); ?></td>
-                    <td><?php echo htmlspecialchars($fila['especialidad']); ?></td>
-                    <td><?php echo $fila['fecha_cita']; ?></td>
-                    <td><?php echo $fila['hora_cita']; ?></td>
-                    <td><?php echo htmlspecialchars($fila['motivo']); ?></td>
-                    <td class="<?php echo $claseEstado; ?>"><?php echo htmlspecialchars($fila['estado']); ?></td>
-                    <td>
-                        <a href="#">Editar</a>
-                        <a href="#">Cancelar</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="9">No hay citas registradas.</td>
-            </tr>
-        <?php endif; ?>
+        <?php foreach ($lista as $fila) { ?>
+        <tr>
+            <td><?php echo $fila['id']; ?></td>
+            <td><?php echo htmlspecialchars($fila['paciente']); ?></td>
+            <td><?php echo htmlspecialchars($fila['doctor']); ?></td>
+            <td><?php echo htmlspecialchars($fila['especialidad']); ?></td>
+            <td><?php echo $fila['fecha_cita']; ?></td>
+            <td><?php echo $fila['hora_cita']; ?></td>
+            <td><?php echo htmlspecialchars($fila['motivo'] ?? ''); ?></td>
+            <td><?php echo $fila['estado']; ?></td>
+            <td>
+                <a href="#">Editar</a> |
+                <a href="#">Cancelar</a>
+            </td>
+        </tr>
+        <?php } ?>
+
     </table>
+
 </body>
 </html>

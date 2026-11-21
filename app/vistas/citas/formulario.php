@@ -1,53 +1,64 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Registrar cita</title>
 </head>
 <body>
+
     <h1>Registrar cita</h1>
 
     <form method="POST" action="/clinica-odonto/app/controladores/citacontroller.php?accion=crear">
-        <label for="paciente_id">Paciente:</label><br>
-        <select id="paciente_id" name="paciente_id" required>
+
+        <label>Paciente:</label><br>
+        <select name="paciente_id" required>
             <option value="">Seleccione paciente</option>
-            <?php foreach ($pacientes as $p): ?>
+            <?php foreach ($pacientes as $p) { ?>
                 <option value="<?php echo $p['id']; ?>">
                     <?php echo htmlspecialchars($p['nombres'] . ' ' . $p['apellidos']); ?>
                 </option>
-            <?php endforeach; ?>
-        </select><br><br>
+            <?php } ?>
+        </select>
+        <br><br>
 
-        <label for="doctor_id">Doctor:</label><br>
-        <select id="doctor_id" name="doctor_id" required>
-            <option value="">Seleccione un doctor</option>
-            <?php foreach ($doctores as $d): ?>
+        <label>Doctor:</label><br>
+        <select name="doctor_id" required>
+            <option value="">Seleccione doctor</option>
+            <?php foreach ($doctores as $d) { ?>
                 <option value="<?php echo $d['id']; ?>">
                     <?php echo htmlspecialchars($d['nombres'] . ' ' . $d['apellidos'] . ' - ' . $d['especialidad']); ?>
                 </option>
-            <?php endforeach; ?>
-        </select><br><br>
+            <?php } ?>
+        </select>
+        <br><br>
 
-        <label for="fecha_cita">Fecha:</label><br>
-        <input type="date" id="fecha_cita" name="fecha_cita" required><br><br>
+        <label>Fecha:</label><br>
+        <input type="date" name="fecha_cita" required>
+        <br><br>
 
-        <label for="hora_cita">Hora:</label><br>
-        <input type="time" id="hora_cita" name="hora_cita" required><br><br>
+        <label>Hora:</label><br>
+        <input type="time" name="hora_cita" required>
+        <br><br>
 
-        <label for="motivo">Motivo:</label><br>
-        <textarea id="motivo" name="motivo" rows="4" cols="50"></textarea><br><br>
+        <label>Motivo:</label><br>
+        <textarea name="motivo" rows="4" cols="40"></textarea>
+        <br><br>
 
-        <label for="estado">Estado:</label><br>
-        <select id="estado" name="estado">
+        <label>Estado:</label><br>
+        <select name="estado">
             <option value="Pendiente">Pendiente</option>
             <option value="Atendida">Atendida</option>
             <option value="Cancelada">Cancelada</option>
-        </select><br><br>
+        </select>
+        <br><br>
 
         <button type="submit">Guardar cita</button>
+
     </form>
 
     <br>
-    <a href="/clinica-odonto/app/controladores/citacontroller.php?accion=listar">Volver a lista</a>
+    <a href="/clinica-odonto/app/controladores/citacontroller.php?accion=listar">Volver a la lista</a>
+
 </body>
 </html>
