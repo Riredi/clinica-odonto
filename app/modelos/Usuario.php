@@ -10,15 +10,15 @@ class Usuario {
     }
 
     public function validar($username, $password) {
-        $sql = "SELECT * FROM usuarios WHERE username = :username LIMIT 1";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute([':username' => $username]);
-        $usuario = $stmt->fetch();
+    $sql = "SELECT * FROM usuarios WHERE username = :username LIMIT 1";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute([':username' => $username]);
+    $usuario = $stmt->fetch();
 
-        if ($usuario && password_verify($password, $usuario['password'])) {
-            return $usuario;
-        }
-        return false;
+    if ($usuario && $password === $usuario['password']) {
+        return $usuario;
     }
+    return false;
+}
 }
 ?>

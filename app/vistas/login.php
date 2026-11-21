@@ -4,10 +4,10 @@
     <h1>Iniciar Sesión</h1>
     
     <?php if (isset($error)): ?>
-        <p><?php echo $error; ?></p>
+        <p><?php echo htmlspecialchars($error); ?></p>
     <?php endif; ?>
     
-    <form method="POST" action="">
+    <form method="POST" action="/clinica-odonto/app/controladores/AuthController.php">
         <label for="username">Usuario:</label><br>
         <input type="text" id="username" name="username" required><br><br>
         

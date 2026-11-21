@@ -1,75 +1,86 @@
 <?php
-    require_once __DIR__ . '/../modelos/Cita.php';
-    require_once __DIR__ . '/../modelos/Paciente.php';
-    require_once __DIR__ . '/../modelos/Doctor.php';
+require_once __DIR__ . '/../modelos/Paciente.php';
 
-    
-    class CitaController {
-    
-        private $cita;
-        private $paciente;
-        private $doctor;
+class PacienteController {
+    private $paciente;
 
-        public function __construct(){
-
-            $this->cita = new Cita();
-            $this->paciente = new Paciente();
-            $this->doctor = new Doctor();
-            
-            }
-
-
-        public function listar() {
-            
-            $stmt = $this->cita->listar();
-
-            $lista = $stmt->fetchAll();
-            
-            require_once __DIR__ . '/../vistas/citas/tabla.php';
-            }
-
-
-
-        public function crear() {
-            
-            if ($_SERVER['REQUEST_METHOD'] === 'POST')
-            {
-                    $datos = 
-                    [
-                        ':paciente_id' => $_POST['paciente_id'],
-                        ':doctor_id'   => $_POST['doctor_id'],
-                        ':fecha_cita'  => $_POST['fecha_cita'],
-                        ':hora_cita'   => $_POST['hora_cita'],
-                        ':motivo'      => $_POST['motivo'],
-                        ':estado'      => $_POST['estado']
-                    ];
-                    
-                    $this->cita->registrar($datos);
-                    
-                    header('Location: CitaController.php?accion=listar');
-                    
-                    exit;
-            }
-                
-                $pacientes = $this->paciente->listar()->fetchAll();
-                $doctores = $this->doctor->listar()->fetchAll();
-                
-                require_once __DIR__ . '/../vistas/citas/formulario.php';
-                
-                }
+    public function __construct() {
+        $this->paciente = new Paciente();
     }
 
-    $controller = new CitaController();
-    $accion = $_GET['accion'] ?? 'listar';
-
-    if ($accion === 'listar')
-    {
-        $controller->listar();
-    
+    public function listar() {
+        $stmt = $this->paciente->listar();
+        $lista = $stmt->fetchAll();
+        require_once __DIR__ . '/../vistas/pacientes/tabla.php';
     }
 
-    elseif ($accion === 'crear') 
-    {
-        $controller->crear();
+    public function crear() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $datos = [
+                ':dni'              => trim($_POST['dni'] ?? ''),
+                ':nombres'          => trim($_POST['nombres'] ?? ''),
+                ':apellidos'        => trim($_POST['apellidos'] ?? ''),
+                ':telefono'         => trim($_POST['telefono'] ?? ''),
+                ':email'            => trim($_POST['email'] ?? ''),
+                ':fecha_nacimiento' => $_POST['fecha_nacimiento'] ?? null
+            ];
+
+            $this->paciente->registrar($datos);
+            header('Location: /clinica-odonto/app/controladores/pacientecontroller.php?accion=listar');
+            exit;
+        }
+
+        $modoEdicion = false;
+        $pacienteData = null;
+        require_once __DIR__ . '/../vistas/pacientes/formulario.php';
     }
+
+    public function editar() {
+        $id = (int) ($_GET['id'] ?? $_POST['id'] ?? 0);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $datos = [
+                ':id'               => $id,
+                ':dni'              => trim($_POST['dni'] ?? ''),
+                ':nombres'          => trim($_POST['nombres'] ?? ''),
+                ':apellidos'        => trim($_POST['apellidos'] ?? ''),
+                ':telefono'         => trim($_POST['telefono'] ?? ''),
+                ':email'            => trim($_POST['email'] ?? ''),
+                ':fecha_nacimiento' => $_POST['fecha_nacimiento'] ?? null
+            ];
+
+            $this->paciente->actualizar($datos);
+            header('Location: /clinica-odonto/app/controladores/pacientecontroller.php?accion=listar');
+            exit;
+        }
+
+        $modoEdicion = true;
+        $pacienteData = $this->paciente->obtener($id);
+        require_once __DIR__ . '/../vistas/pacientes/formulario.php';
+    }
+
+    public function eliminar() {
+        $id = (int) ($_GET['id'] ?? 0);
+        if ($id > 0) {
+            $this->paciente->eliminar($id);
+        }
+        header('Location: /clinica-odonto/app/controladores/pacientecontroller.php?accion=listar');
+        exit;
+    }
+}
+
+$controller = new PacienteController();
+$accion = $_GET['accion'] ?? 'listar';
+
+if ($accion === 'listar') {
+    $controller->listar();
+} elseif ($accion === 'crear') {
+    $controller->crear();
+} elseif ($accion === 'editar') {
+    $controller->editar();
+} elseif ($accion === 'eliminar') {
+    $controller->eliminar();
+} else {
+    $controller->listar();
+}
 ?>

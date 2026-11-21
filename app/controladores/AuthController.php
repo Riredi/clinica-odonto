@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($resultado) {
         $_SESSION['admin'] = $resultado['nombre_completo'];
-        header('Location: /clinica/index.php');
+        header('Location: /clinica-odonto/index.php');
         exit;
     } else {
         $error = "Usuario o contraseña incorrectos";

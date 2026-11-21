@@ -1,56 +1,59 @@
-<?php
-    require_once __DIR__ . '/../../modelos/Doctor.php';
-
-    $doctor = new Doctor();
-    $resultado = $doctor->listar();
-    $lista = $resultado->fetchAll();
-?>
-
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Doctores</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        table { border-collapse: collapse; width: 100%; max-width: 900px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        a { text-decoration: none; color: blue; }
+        .btn-del { color: #c0392b; margin-left: 8px; }
+    </style>
+</head>
+<body>
+    <h1>Lista de Doctores</h1>
+    <p>
+        <a href="/clinica-odonto/app/controladores/doctorcontroller.php?accion=crear">+ Agregar nuevo doctor</a> |
+        <a href="/clinica-odonto/index.php">Volver al inicio</a>
+    </p>
 
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>CMP</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Especialidad</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Acciones</th>
+        </tr>
 
-    <head>
-        <!--nota: esto es una plantilla para las tablas-->
-        <style>
-            body { font-family: Arial, sans-serif; margin: 20px; }
-            table { border-collapse: collapse; width: 100%; max-width: 800px; }
-            th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-            th { background-color: #f2f2f2; }
-            a { text-decoration: none; color: blue; }
-        </style>
-    </head>
-
-
-    <body>
-        <h1>Lista de Doctores</h1>
-        <p><a href="formulario.php">+ Agregar nuevo doctor</a></p>
-
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>CMP</th>
-                <th>Nombres</th>
-                <th>Apellidos</th>
-                <th>Especialidad</th>
-                <th>Teléfono</th>
-                <th>Acciones</th>
-            </tr>
-            
-            <?php foreach($lista as $fila) { ?>
+        <?php if (!empty($lista)): ?>
+            <?php foreach ($lista as $fila): ?>
                 <tr>
-                    <td><?php echo $fila["id"]; ?></td>
-                    <td><?php echo $fila["cmp"]; ?></td>
-                    <td><?php echo $fila["nombres"]; ?></td>
-                    <td><?php echo $fila["apellidos"]; ?></td>
-                    <td><?php echo $fila["especialidad"]; ?></td>
-                    <td><?php echo $fila["telefono"]; ?></td>
+                    <td><?php echo (int) $fila['id']; ?></td>
+                    <td><?php echo htmlspecialchars($fila['cmp']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['nombres']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['apellidos']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['especialidad']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['telefono']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['email']); ?></td>
                     <td>
-                        <a href="../../controladores/DoctorController.php?accion=editar&id=<?php echo $fila['id']; ?>">Editar</a>
-                        <a class="btn-del" href="../../controladores/DoctorController.php?accion=eliminar&id=<?php echo $fila['id']; ?>" onclick="return confirm('¿Eliminar este doctor?')">Eliminar</a>
+                        <a href="/clinica-odonto/app/controladores/doctorcontroller.php?accion=editar&id=<?php echo (int) $fila['id']; ?>">Editar</a>
+                        <a class="btn-del"
+                           href="/clinica-odonto/app/controladores/doctorcontroller.php?accion=eliminar&id=<?php echo (int) $fila['id']; ?>"
+                           onclick="return confirm('¿Eliminar este doctor?')">Eliminar</a>
                     </td>
                 </tr>
-            <?php } ?>
-        </table>
-    </body>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="8">No hay doctores registrados.</td>
+            </tr>
+        <?php endif; ?>
+    </table>
+</body>
 </html>
